@@ -234,23 +234,16 @@ def test_repeat_calls_are_deterministic(model):
 
 def test_batch_inference_is_internally_consistent(model):
     """
-    Running the same batch twice must give identical results.
-
-    NOTE: batch results are NOT required to match single-image results.
-    Ultralytics letterbox-pads all images in a batch to the same dimensions,
-    so the letterbox ratio/padding differs from single-image inference when
-    image sizes differ. Method B uses those values for anchor mapping, so
-    class_scores will differ between batch and single calls.
-
-    In the pipeline, canonical_infer always processes all unlabeled images
-    in one consistent batch per round — it never mixes batch and single
-    inference. Consistency within a batch call is what matters.
+    Running the same batch twice with the same batch_size must give
+    identical results — verifies the batch composition contract.
     """
     bus   = get_bus_image()
     noise = make_noise_image()
 
-    pool1 = canonical_infer(model, ["bus_0", "noise_0"], [bus, noise], round_id=1)
-    pool2 = canonical_infer(model, ["bus_0", "noise_0"], [bus, noise], round_id=1)
+    pool1 = canonical_infer(model, ["bus_0", "noise_0"], [bus, noise],
+                            round_id=1, batch_size=8)
+    pool2 = canonical_infer(model, ["bus_0", "noise_0"], [bus, noise],
+                            round_id=1, batch_size=8)
 
     assert len(pool1["bus_0"]) == len(pool2["bus_0"]), (
         f"Batch consistency: pass1={len(pool1['bus_0'])} dets "
@@ -262,6 +255,33 @@ def test_batch_inference_is_internally_consistent(model):
         assert pl1.confidence == pl2.confidence
 
     print("PASS  test_batch_inference_is_internally_consistent")
+
+
+def test_sorted_order_is_fixed(model):
+    """
+    Batch composition contract: canonical_infer sorts image_ids
+    lexicographically before batching. Results must be identical
+    regardless of input order.
+    """
+    bus   = get_bus_image()
+    noise = make_noise_image()
+
+    # Forward order
+    pool1 = canonical_infer(model, ["bus_0", "noise_0"], [bus, noise],
+                            round_id=1, batch_size=8)
+    # Reverse order — should give identical results because of sorting
+    pool2 = canonical_infer(model, ["noise_0", "bus_0"], [noise, bus],
+                            round_id=1, batch_size=8)
+
+    assert set(pool1.keys()) == set(pool2.keys())
+    assert len(pool1["bus_0"]) == len(pool2["bus_0"]), (
+        "Sorted order: different input order gave different detection count")
+
+    for pl1, pl2 in zip(pool1["bus_0"], pool2["bus_0"]):
+        assert pl1.class_scores == pl2.class_scores, (
+            "Sorted order: class_scores differ when input order is reversed")
+
+    print("PASS  test_sorted_order_is_fixed")
 
 
 # ── Runner ────────────────────────────────────────────────────────────────────
@@ -283,6 +303,7 @@ if __name__ == "__main__":
         (test_confidence_and_class_scores_independent,model),
         (test_repeat_calls_are_deterministic,         model),
         (test_batch_inference_is_internally_consistent, model),
+        (test_sorted_order_is_fixed,                       model),
     ]
 
     passed = 0
