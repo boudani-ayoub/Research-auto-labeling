@@ -155,7 +155,9 @@ class YOLOTrainer(TrainerInterface):
                 f"--label_output_dir <path> first."
             )
 
-        round_dir   = Path(self.config.output_dir) / f"round_{round_id:04d}"
+        # Resolve to absolute path — Ultralytics prepends runs/detect/ to
+        # relative project paths, causing checkpoint lookup to fail.
+        round_dir   = Path(self.config.output_dir).resolve() / f"round_{round_id:04d}"
         img_train   = round_dir / "images" / "train"
         label_train = round_dir / "labels" / "train"
 
