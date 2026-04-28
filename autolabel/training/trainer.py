@@ -140,17 +140,27 @@ class YOLOTrainer(TrainerInterface):
         Returns the round directory path.
         Raises FileNotFoundError if a pseudo-label image cannot be located.
         """
-        # Resolve and validate BEFORE touching the filesystem.
+        # Resolve and validate ALL inputs BEFORE touching the filesystem.
         # A validation error must never delete a previously valid assembly.
         labeled = self._resolve_labeled_data(labeled_data)
         self._validate_unique_image_ids(labeled)
+
+        # label_dir check must also happen before rmtree
+        label_dir_path = Path(labeled.get("label_dir", ""))
+        if label_dir_path and not label_dir_path.exists():
+            raise FileNotFoundError(
+                f"label_dir not found: {label_dir_path}\n"
+                f"YOLO-format label files must exist before training. "
+                f"For COCO, run: python data/make_splits.py --convert_labels "
+                f"--label_output_dir <path> first."
+            )
 
         round_dir   = Path(self.config.output_dir) / f"round_{round_id:04d}"
         img_train   = round_dir / "images" / "train"
         label_train = round_dir / "labels" / "train"
 
         # Fresh directory per round — idempotent assembly.
-        # Only reached if validation passed — safe to delete now.
+        # Only reached after all validation passes — safe to delete now.
         if round_dir.exists():
             shutil.rmtree(round_dir)
         img_train.mkdir(parents=True, exist_ok=False)
@@ -235,30 +245,63 @@ class YOLOTrainer(TrainerInterface):
 
     def _validate_unique_image_ids(self, labeled: Dict) -> None:
         """
-        Enforce MVP uniqueness rule: no image stem may appear in both
-        labeled image_dir and unlabeled_image_dir.
-        Called immediately after resolving labeled_data, before any I/O.
+        Enforce image ID uniqueness between labeled and unlabeled sets.
+
+        Two modes:
+          SAME directory (e.g. COCO train2017):
+            Both labeled image_list and unlabeled_list come from the same dir.
+            Validate list-level disjointness: no stem in image_list may also
+            appear in unlabeled_list.
+
+          DIFFERENT directories (e.g. separate labeled/unlabeled datasets):
+            Validate directory-level disjointness: no stem in labeled image_dir
+            may appear in unlabeled_image_dir.
+
         Raises ValueError naming the first conflicting stem found.
         """
         labeled_dir   = Path(labeled.get("image_dir", ""))
         unlabeled_dir = Path(labeled.get("unlabeled_image_dir", ""))
 
-        if not labeled_dir.exists() or not unlabeled_dir.exists():
-            return
+        if not unlabeled_dir or not unlabeled_dir.exists():
+            return  # no unlabeled dir — nothing to check
 
-        labeled_stems = {
-            p.stem for p in labeled_dir.iterdir()
-            if p.suffix.lower() in (".jpg", ".jpeg", ".png")
-        }
-        for p in unlabeled_dir.iterdir():
-            if p.suffix.lower() in (".jpg", ".jpeg", ".png"):
-                if p.stem in labeled_stems:
-                    raise ValueError(
-                        f"Image ID collision: stem {p.stem!r} exists in both "
-                        f"labeled image_dir ({labeled_dir}) and "
-                        f"unlabeled_image_dir ({unlabeled_dir}). "
-                        f"Labeled and unlabeled image IDs must be globally unique."
-                    )
+        same_dir = (labeled_dir.resolve() == unlabeled_dir.resolve())
+
+        if same_dir:
+            # COCO-style: both sets live in the same directory.
+            # Validate list-level disjointness only.
+            labeled_list   = labeled.get("image_list", [])
+            unlabeled_list = labeled.get("unlabeled_list", [])
+            if not unlabeled_list:
+                return  # no unlabeled list provided — skip
+
+            labeled_stems   = {Path(f).stem for f in labeled_list}
+            unlabeled_stems = {Path(f).stem for f in unlabeled_list}
+            overlap = labeled_stems & unlabeled_stems
+            if overlap:
+                example = next(iter(sorted(overlap)))
+                raise ValueError(
+                    f"Image ID collision in shared directory: stem {example!r} "
+                    f"appears in both image_list and unlabeled_list. "
+                    f"Labeled and unlabeled image IDs must be disjoint."
+                )
+        else:
+            # Different directories: directory-level scan
+            if not labeled_dir.exists():
+                return
+            labeled_stems = {
+                p.stem for p in labeled_dir.iterdir()
+                if p.suffix.lower() in (".jpg", ".jpeg", ".png")
+            }
+            for p in unlabeled_dir.iterdir():
+                if p.suffix.lower() in (".jpg", ".jpeg", ".png"):
+                    if p.stem in labeled_stems:
+                        raise ValueError(
+                            f"Image ID collision: stem {p.stem!r} exists in both "
+                            f"labeled image_dir ({labeled_dir}) and "
+                            f"unlabeled_image_dir ({unlabeled_dir}). "
+                            f"Labeled and unlabeled image IDs must be globally unique."
+                        )
 
     def _find_image(self, image_id: str, labeled: Dict) -> Path:
         """

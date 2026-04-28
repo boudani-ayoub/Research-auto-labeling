@@ -419,6 +419,73 @@ def test_validation_error_does_not_delete_previous_assembly():
     print("PASS  test_validation_error_does_not_delete_previous_assembly")
 
 
+def test_missing_label_dir_does_not_delete_previous_assembly():
+    """label_dir validation must happen before rmtree."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        labeled = make_labeled_dataset(tmp, n_images=1)
+        cfg     = default_config(str(tmp / "out"))
+        rd0 = assemble_dataset_only(labeled, [], 0, cfg)
+        assert rd0.exists()
+        bad = dict(labeled)
+        bad["label_dir"] = str(tmp / "nonexistent_labels")
+        try:
+            assemble_dataset_only(bad, [], 1, cfg)
+            assert False, "Should have raised FileNotFoundError"
+        except FileNotFoundError:
+            pass
+        assert rd0.exists(), "Round 0 deleted by failed round 1 with bad label_dir"
+    print("PASS  test_missing_label_dir_does_not_delete_previous_assembly")
+
+def test_same_dir_disjoint_lists_passes():
+    """COCO mode: same dir, disjoint image_list/unlabeled_list -> no error."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        shared = tmp / "images" / "train"
+        labels = tmp / "labels" / "train"
+        shared.mkdir(parents=True)
+        labels.mkdir(parents=True)
+        for i in range(4):
+            make_image(shared / f"img_{i:04d}.jpg")
+            (labels / f"img_{i:04d}.txt").write_text("0 0.5 0.5 0.3 0.3")
+        cfg = default_config(str(tmp / "out"))
+        data = {
+            "image_dir":           str(shared),
+            "label_dir":           str(labels),
+            "image_list":          ["img_0000.jpg", "img_0001.jpg"],
+            "unlabeled_image_dir": str(shared),
+            "unlabeled_list":      ["img_0002.jpg", "img_0003.jpg"],
+        }
+        rd = assemble_dataset_only(data, [], 0, cfg)
+        assert rd.exists()
+    print("PASS  test_same_dir_disjoint_lists_passes")
+
+def test_same_dir_overlapping_lists_raises():
+    """COCO mode: overlapping image_list/unlabeled_list -> ValueError."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        shared = tmp / "images" / "train"
+        labels = tmp / "labels" / "train"
+        shared.mkdir(parents=True)
+        labels.mkdir(parents=True)
+        for i in range(3):
+            make_image(shared / f"img_{i:04d}.jpg")
+            (labels / f"img_{i:04d}.txt").write_text("0 0.5 0.5 0.3 0.3")
+        cfg = default_config(str(tmp / "out"))
+        data = {
+            "image_dir":           str(shared),
+            "label_dir":           str(labels),
+            "image_list":          ["img_0000.jpg", "img_0001.jpg"],
+            "unlabeled_image_dir": str(shared),
+            "unlabeled_list":      ["img_0001.jpg", "img_0002.jpg"],
+        }
+        try:
+            assemble_dataset_only(data, [], 0, cfg)
+            assert False, "Should raise ValueError on overlap"
+        except ValueError:
+            pass
+    print("PASS  test_same_dir_overlapping_lists_raises")
+
 # ── Runner ────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
@@ -439,6 +506,9 @@ if __name__ == "__main__":
         test_round_directory_naming,
         test_assembly_is_idempotent,
         test_validation_error_does_not_delete_previous_assembly,
+        test_missing_label_dir_does_not_delete_previous_assembly,
+        test_same_dir_disjoint_lists_passes,
+        test_same_dir_overlapping_lists_raises,
     ]
 
     passed = 0
