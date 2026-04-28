@@ -390,7 +390,13 @@ if __name__ == "__main__":
         help="Also convert COCO annotations to YOLO .txt format")
     parser.add_argument(
         "--label_output_dir", default=None,
-        help="Where to write YOLO .txt labels (required if --convert_labels)")
+        help="Where to write YOLO train .txt labels (required if --convert_labels)")
+    parser.add_argument(
+        "--convert_val_labels", action="store_true",
+        help="Also convert val2017 annotations to YOLO .txt format")
+    parser.add_argument(
+        "--val_label_output_dir", default=None,
+        help="Where to write YOLO val .txt labels (required if --convert_val_labels)")
 
     args = parser.parse_args()
 
@@ -409,10 +415,25 @@ if __name__ == "__main__":
             Path(args.coco_dir) / "annotations" / "instances_train2017.json")
         image_dir = str(
             Path(args.coco_dir) / "images" / "train2017")
-        print(f"Converting COCO annotations to YOLO format → {args.label_output_dir}")
+        print(f"Converting train2017 annotations to YOLO format → {args.label_output_dir}")
         n = convert_coco_to_yolo(
             annotation_file  = annotation_file,
             image_dir        = image_dir,
             output_label_dir = args.label_output_dir,
         )
-        print(f"Written {n:,} YOLO label files")
+        print(f"Written {n:,} train YOLO label files")
+
+    if args.convert_val_labels:
+        if not args.val_label_output_dir:
+            parser.error("--val_label_output_dir required when --convert_val_labels is set")
+        val_annotation_file = str(
+            Path(args.coco_dir) / "annotations" / "instances_val2017.json")
+        val_image_dir = str(
+            Path(args.coco_dir) / "images" / "val2017")
+        print(f"Converting val2017 annotations to YOLO format → {args.val_label_output_dir}")
+        n = convert_coco_to_yolo(
+            annotation_file  = val_annotation_file,
+            image_dir        = val_image_dir,
+            output_label_dir = args.val_label_output_dir,
+        )
+        print(f"Written {n:,} val YOLO label files")
