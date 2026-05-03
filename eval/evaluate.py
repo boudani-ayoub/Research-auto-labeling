@@ -144,8 +144,11 @@ def evaluate_checkpoint(checkpoint:    str,
         checkpoint:    path to .pt checkpoint file
         val_image_dir: path to val2017 images directory
         val_label_dir: path to YOLO-format val2017 labels directory
-        num_classes:   number of object classes (80 for COCO)
-        class_names:   list of class names (None → uses indices)
+        num_classes:   number of object classes (80 for COCO, 5 for
+                        filtered vehicles)
+        class_names:   list of class names (None → integer indices).
+                        Strongly recommended for the filtered experiment
+                        so per-class AP is labeled "bicycle"/"car"/...
         imgsz:         validation image size (default 640)
         batch:         validation batch size
         device:        CUDA device index or 'cpu'
@@ -155,9 +158,18 @@ def evaluate_checkpoint(checkpoint:    str,
 
     Returns:
         EvalResult with mAP50, mAP50-95, per-class AP
+
+    Raises:
+        ValueError if class_names length does not match num_classes
     """
     import torch
     from ultralytics import YOLO
+
+    if class_names is not None and len(class_names) != num_classes:
+        raise ValueError(
+            f"class_names has {len(class_names)} entries but "
+            f"num_classes={num_classes}. They must match."
+        )
 
     checkpoint = str(Path(checkpoint).resolve())
     if not Path(checkpoint).exists():
@@ -329,6 +341,11 @@ if __name__ == "__main__":
 
     # Model/eval settings
     parser.add_argument("--num_classes", type=int, default=80)
+    parser.add_argument("--class_names", default=None,
+        help="Comma-separated class names matching num_classes "
+             "(e.g. 'bicycle,car,motorcycle,bus,truck'). "
+             "Required for filtered-class experiments to label per-class AP "
+             "with names instead of integer indices.")
     parser.add_argument("--imgsz",       type=int, default=640)
     parser.add_argument("--batch",       type=int, default=16)
     parser.add_argument("--device", default="0" if torch.cuda.is_available() else "cpu")
@@ -341,6 +358,17 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    # Parse class_names CSV
+    class_names_list: Optional[List[str]] = None
+    if args.class_names:
+        class_names_list = [n.strip() for n in args.class_names.split(",")
+                            if n.strip()]
+        if len(class_names_list) != args.num_classes:
+            parser.error(
+                f"--class_names has {len(class_names_list)} entries but "
+                f"--num_classes={args.num_classes}. They must match."
+            )
+
     if args.checkpoint:
         print(f"Evaluating {args.checkpoint} ...")
         result = evaluate_checkpoint(
@@ -348,6 +376,7 @@ if __name__ == "__main__":
             val_image_dir = args.val_image_dir,
             val_label_dir = args.val_label_dir,
             num_classes   = args.num_classes,
+            class_names   = class_names_list,
             imgsz         = args.imgsz,
             batch         = args.batch,
             device        = args.device,
@@ -357,6 +386,10 @@ if __name__ == "__main__":
         print(f"  mAP50:    {result.map50:.4f}")
         print(f"  mAP50-95: {result.map50_95:.4f}")
         print(f"  Speed:    {result.speed_ms:.1f} ms/image")
+        if result.per_class:
+            print(f"  Per-class AP50:")
+            for name, ap in result.per_class.items():
+                print(f"    {name}: {ap:.4f}")
         results = [result]
 
     else:
@@ -366,6 +399,7 @@ if __name__ == "__main__":
             val_image_dir = args.val_image_dir,
             val_label_dir = args.val_label_dir,
             num_classes   = args.num_classes,
+            class_names   = class_names_list,
             imgsz         = args.imgsz,
             batch         = args.batch,
             device        = args.device,
