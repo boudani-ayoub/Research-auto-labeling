@@ -36,3 +36,11 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Filtered-COCO output tree (regeneratable from data/make_filtered_coco_splits.py)
+coco_filtered_vehicles/
+*/coco_filtered_vehicles/
+
+# Old legacy non-filtered splits stay ignored; new filtered-experiment
+# vehicle splits (data/splits_vehicles/) ARE tracked because they define
+# the labeled IDs used in published experiments.
