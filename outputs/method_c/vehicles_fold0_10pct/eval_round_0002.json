@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-05-07T01:42:14.248539+00:00",
+  "metadata": {},
+  "results": [
+    {
+      "map50": 0.4619004739719637,
+      "map50_95": 0.2901865717227272,
+      "per_class": {
+        "bicycle": 0.33344515382931506,
+        "car": 0.5384065021971509,
+        "motorcycle": 0.46036503931734674,
+        "bus": 0.643683050445391,
+        "truck": 0.33360262407061503
+      },
+      "checkpoint": "/home/ayoub/research/stability_autolabel/outputs/method_c/vehicles_fold0_10pct/training/round_0002/round_0002/train/weights/best.pt",
+      "round_id": 2,
+      "n_images": 870,
+      "speed_ms": 1.3906571492231612
+    }
+  ]
+}

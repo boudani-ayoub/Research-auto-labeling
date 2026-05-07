@@ -1,0 +1,571 @@
+2026-05-07 05:26:33,050 [method_c] INFO: Method C — Stability-gated iterative auto-labeling
+2026-05-07 05:26:33,050 [method_c] INFO: Args: {'split_json': 'data/splits_vehicles/coco_vehicles_fold0_10pct.json', 'init_checkpoint': 'outputs/baseline_a/vehicles_fold0_10pct/training/round_0000/train/weights/best.pt', 'output_dir': 'outputs/method_c/vehicles_fold0_10pct', 'rounds': 3, 'epochs': 100, 'patience': 20, 'device': '0', 'batch_size': 8, 'chunk_size': 200, 'max_unlabeled': None, 'alpha': 0.33, 'beta': 0.33, 'gamma': 0.34, 'tau_stab': 0.6, 'tau_conf': 0.5, 'min_iou_gate': 0.3, 'lambda_cls': 1.0, 'epsilon_match': 0.05, 'warmup_rounds': 2, 'K_consecutive': 2, 'overwrite': True}
+2026-05-07 05:26:33,068 [method_c] INFO: Labeled images: 1778, Inner-val: 198, Unlabeled: 17783
+2026-05-07 05:26:33,186 [method_c] INFO: Unlabeled image paths validated: 17783 (all exist)
+2026-05-07 05:26:33,276 [method_c] INFO: ======================================================================
+2026-05-07 05:26:33,276 [method_c] INFO: ROUND 0: Bootstrap — canonical inference with Baseline A
+2026-05-07 05:26:33,276 [method_c] INFO: ======================================================================
+2026-05-07 05:26:33,276 [method_c] INFO: Checkpoint: outputs/baseline_a/vehicles_fold0_10pct/training/round_0000/train/weights/best.pt
+2026-05-07 05:26:38,688 [method_c] INFO:   canonical inference: 200 / 17783 images
+2026-05-07 05:26:42,391 [method_c] INFO:   canonical inference: 400 / 17783 images
+2026-05-07 05:26:46,123 [method_c] INFO:   canonical inference: 600 / 17783 images
+2026-05-07 05:26:49,885 [method_c] INFO:   canonical inference: 800 / 17783 images
+2026-05-07 05:26:53,543 [method_c] INFO:   canonical inference: 1000 / 17783 images
+2026-05-07 05:26:57,173 [method_c] INFO:   canonical inference: 1200 / 17783 images
+2026-05-07 05:27:00,906 [method_c] INFO:   canonical inference: 1400 / 17783 images
+2026-05-07 05:27:04,679 [method_c] INFO:   canonical inference: 1600 / 17783 images
+2026-05-07 05:27:08,427 [method_c] INFO:   canonical inference: 1800 / 17783 images
+2026-05-07 05:27:12,194 [method_c] INFO:   canonical inference: 2000 / 17783 images
+2026-05-07 05:27:15,702 [method_c] INFO:   canonical inference: 2200 / 17783 images
+2026-05-07 05:27:19,160 [method_c] INFO:   canonical inference: 2400 / 17783 images
+2026-05-07 05:27:22,694 [method_c] INFO:   canonical inference: 2600 / 17783 images
+2026-05-07 05:27:26,205 [method_c] INFO:   canonical inference: 2800 / 17783 images
+2026-05-07 05:27:29,697 [method_c] INFO:   canonical inference: 3000 / 17783 images
+2026-05-07 05:27:33,158 [method_c] INFO:   canonical inference: 3200 / 17783 images
+2026-05-07 05:27:36,591 [method_c] INFO:   canonical inference: 3400 / 17783 images
+2026-05-07 05:27:40,126 [method_c] INFO:   canonical inference: 3600 / 17783 images
+2026-05-07 05:27:43,636 [method_c] INFO:   canonical inference: 3800 / 17783 images
+2026-05-07 05:27:47,140 [method_c] INFO:   canonical inference: 4000 / 17783 images
+2026-05-07 05:27:50,593 [method_c] INFO:   canonical inference: 4200 / 17783 images
+2026-05-07 05:27:54,086 [method_c] INFO:   canonical inference: 4400 / 17783 images
+2026-05-07 05:27:57,667 [method_c] INFO:   canonical inference: 4600 / 17783 images
+2026-05-07 05:28:01,101 [method_c] INFO:   canonical inference: 4800 / 17783 images
+2026-05-07 05:28:04,646 [method_c] INFO:   canonical inference: 5000 / 17783 images
+2026-05-07 05:28:08,165 [method_c] INFO:   canonical inference: 5200 / 17783 images
+2026-05-07 05:28:11,683 [method_c] INFO:   canonical inference: 5400 / 17783 images
+2026-05-07 05:28:15,177 [method_c] INFO:   canonical inference: 5600 / 17783 images
+2026-05-07 05:28:18,684 [method_c] INFO:   canonical inference: 5800 / 17783 images
+2026-05-07 05:28:22,220 [method_c] INFO:   canonical inference: 6000 / 17783 images
+2026-05-07 05:28:25,794 [method_c] INFO:   canonical inference: 6200 / 17783 images
+2026-05-07 05:28:29,271 [method_c] INFO:   canonical inference: 6400 / 17783 images
+2026-05-07 05:28:32,838 [method_c] INFO:   canonical inference: 6600 / 17783 images
+2026-05-07 05:28:36,397 [method_c] INFO:   canonical inference: 6800 / 17783 images
+2026-05-07 05:28:39,887 [method_c] INFO:   canonical inference: 7000 / 17783 images
+2026-05-07 05:28:43,413 [method_c] INFO:   canonical inference: 7200 / 17783 images
+2026-05-07 05:28:46,863 [method_c] INFO:   canonical inference: 7400 / 17783 images
+2026-05-07 05:28:50,556 [method_c] INFO:   canonical inference: 7600 / 17783 images
+2026-05-07 05:28:54,094 [method_c] INFO:   canonical inference: 7800 / 17783 images
+2026-05-07 05:28:57,631 [method_c] INFO:   canonical inference: 8000 / 17783 images
+2026-05-07 05:29:01,247 [method_c] INFO:   canonical inference: 8200 / 17783 images
+2026-05-07 05:29:04,776 [method_c] INFO:   canonical inference: 8400 / 17783 images
+2026-05-07 05:29:08,267 [method_c] INFO:   canonical inference: 8600 / 17783 images
+2026-05-07 05:29:11,771 [method_c] INFO:   canonical inference: 8800 / 17783 images
+2026-05-07 05:29:15,318 [method_c] INFO:   canonical inference: 9000 / 17783 images
+2026-05-07 05:29:18,802 [method_c] INFO:   canonical inference: 9200 / 17783 images
+2026-05-07 05:29:22,300 [method_c] INFO:   canonical inference: 9400 / 17783 images
+2026-05-07 05:29:25,834 [method_c] INFO:   canonical inference: 9600 / 17783 images
+2026-05-07 05:29:29,423 [method_c] INFO:   canonical inference: 9800 / 17783 images
+2026-05-07 05:29:32,968 [method_c] INFO:   canonical inference: 10000 / 17783 images
+2026-05-07 05:29:36,587 [method_c] INFO:   canonical inference: 10200 / 17783 images
+2026-05-07 05:29:40,128 [method_c] INFO:   canonical inference: 10400 / 17783 images
+2026-05-07 05:29:43,665 [method_c] INFO:   canonical inference: 10600 / 17783 images
+2026-05-07 05:29:47,260 [method_c] INFO:   canonical inference: 10800 / 17783 images
+2026-05-07 05:29:50,852 [method_c] INFO:   canonical inference: 11000 / 17783 images
+2026-05-07 05:29:54,460 [method_c] INFO:   canonical inference: 11200 / 17783 images
+2026-05-07 05:29:58,039 [method_c] INFO:   canonical inference: 11400 / 17783 images
+2026-05-07 05:30:01,843 [method_c] INFO:   canonical inference: 11600 / 17783 images
+2026-05-07 05:30:05,473 [method_c] INFO:   canonical inference: 11800 / 17783 images
+2026-05-07 05:30:09,057 [method_c] INFO:   canonical inference: 12000 / 17783 images
+2026-05-07 05:30:12,654 [method_c] INFO:   canonical inference: 12200 / 17783 images
+2026-05-07 05:30:16,267 [method_c] INFO:   canonical inference: 12400 / 17783 images
+2026-05-07 05:30:19,938 [method_c] INFO:   canonical inference: 12600 / 17783 images
+2026-05-07 05:30:23,478 [method_c] INFO:   canonical inference: 12800 / 17783 images
+2026-05-07 05:30:27,041 [method_c] INFO:   canonical inference: 13000 / 17783 images
+2026-05-07 05:30:30,609 [method_c] INFO:   canonical inference: 13200 / 17783 images
+2026-05-07 05:30:34,157 [method_c] INFO:   canonical inference: 13400 / 17783 images
+2026-05-07 05:30:37,730 [method_c] INFO:   canonical inference: 13600 / 17783 images
+2026-05-07 05:30:41,327 [method_c] INFO:   canonical inference: 13800 / 17783 images
+2026-05-07 05:30:44,894 [method_c] INFO:   canonical inference: 14000 / 17783 images
+2026-05-07 05:30:48,409 [method_c] INFO:   canonical inference: 14200 / 17783 images
+2026-05-07 05:30:51,973 [method_c] INFO:   canonical inference: 14400 / 17783 images
+2026-05-07 05:30:55,571 [method_c] INFO:   canonical inference: 14600 / 17783 images
+2026-05-07 05:30:59,116 [method_c] INFO:   canonical inference: 14800 / 17783 images
+2026-05-07 05:31:02,734 [method_c] INFO:   canonical inference: 15000 / 17783 images
+2026-05-07 05:31:06,274 [method_c] INFO:   canonical inference: 15200 / 17783 images
+2026-05-07 05:31:09,900 [method_c] INFO:   canonical inference: 15400 / 17783 images
+2026-05-07 05:31:13,521 [method_c] INFO:   canonical inference: 15600 / 17783 images
+2026-05-07 05:31:17,122 [method_c] INFO:   canonical inference: 15800 / 17783 images
+2026-05-07 05:31:20,718 [method_c] INFO:   canonical inference: 16000 / 17783 images
+2026-05-07 05:31:24,288 [method_c] INFO:   canonical inference: 16200 / 17783 images
+2026-05-07 05:31:27,884 [method_c] INFO:   canonical inference: 16400 / 17783 images
+2026-05-07 05:31:31,482 [method_c] INFO:   canonical inference: 16600 / 17783 images
+2026-05-07 05:31:35,068 [method_c] INFO:   canonical inference: 16800 / 17783 images
+2026-05-07 05:31:38,661 [method_c] INFO:   canonical inference: 17000 / 17783 images
+2026-05-07 05:31:42,307 [method_c] INFO:   canonical inference: 17200 / 17783 images
+2026-05-07 05:31:45,914 [method_c] INFO:   canonical inference: 17400 / 17783 images
+2026-05-07 05:31:49,532 [method_c] INFO:   canonical inference: 17600 / 17783 images
+2026-05-07 05:31:52,856 [method_c] INFO:   canonical inference: 17783 / 17783 images
+2026-05-07 05:31:52,861 [method_c] INFO:   C_0: 113684 candidates across 17783 images
+2026-05-07 05:31:57,652 [method_c] INFO:   Round 0 bootstrap complete: C_0 stored in bank.
+2026-05-07 05:31:57,652 [method_c] INFO: ======================================================================
+2026-05-07 05:31:57,652 [method_c] INFO: ROUND 1 / 3
+2026-05-07 05:31:57,652 [method_c] INFO: ======================================================================
+2026-05-07 05:31:57,652 [method_c] INFO: Step 1: Canonical inference on 17783 unlabeled images...
+2026-05-07 05:32:01,607 [method_c] INFO:   canonical inference: 200 / 17783 images
+2026-05-07 05:32:05,056 [method_c] INFO:   canonical inference: 400 / 17783 images
+2026-05-07 05:32:08,497 [method_c] INFO:   canonical inference: 600 / 17783 images
+2026-05-07 05:32:11,990 [method_c] INFO:   canonical inference: 800 / 17783 images
+2026-05-07 05:32:15,566 [method_c] INFO:   canonical inference: 1000 / 17783 images
+2026-05-07 05:32:19,061 [method_c] INFO:   canonical inference: 1200 / 17783 images
+2026-05-07 05:32:22,619 [method_c] INFO:   canonical inference: 1400 / 17783 images
+2026-05-07 05:32:26,137 [method_c] INFO:   canonical inference: 1600 / 17783 images
+2026-05-07 05:32:29,751 [method_c] INFO:   canonical inference: 1800 / 17783 images
+2026-05-07 05:32:33,200 [method_c] INFO:   canonical inference: 2000 / 17783 images
+2026-05-07 05:32:36,751 [method_c] INFO:   canonical inference: 2200 / 17783 images
+2026-05-07 05:32:40,363 [method_c] INFO:   canonical inference: 2400 / 17783 images
+2026-05-07 05:32:43,926 [method_c] INFO:   canonical inference: 2600 / 17783 images
+2026-05-07 05:32:47,470 [method_c] INFO:   canonical inference: 2800 / 17783 images
+2026-05-07 05:32:51,033 [method_c] INFO:   canonical inference: 3000 / 17783 images
+2026-05-07 05:32:54,566 [method_c] INFO:   canonical inference: 3200 / 17783 images
+2026-05-07 05:32:58,160 [method_c] INFO:   canonical inference: 3400 / 17783 images
+2026-05-07 05:33:01,724 [method_c] INFO:   canonical inference: 3600 / 17783 images
+2026-05-07 05:33:05,166 [method_c] INFO:   canonical inference: 3800 / 17783 images
+2026-05-07 05:33:09,021 [method_c] INFO:   canonical inference: 4000 / 17783 images
+2026-05-07 05:33:12,552 [method_c] INFO:   canonical inference: 4200 / 17783 images
+2026-05-07 05:33:16,080 [method_c] INFO:   canonical inference: 4400 / 17783 images
+2026-05-07 05:33:19,678 [method_c] INFO:   canonical inference: 4600 / 17783 images
+2026-05-07 05:33:23,177 [method_c] INFO:   canonical inference: 4800 / 17783 images
+2026-05-07 05:33:26,717 [method_c] INFO:   canonical inference: 5000 / 17783 images
+2026-05-07 05:33:30,275 [method_c] INFO:   canonical inference: 5200 / 17783 images
+2026-05-07 05:33:33,956 [method_c] INFO:   canonical inference: 5400 / 17783 images
+2026-05-07 05:33:37,596 [method_c] INFO:   canonical inference: 5600 / 17783 images
+2026-05-07 05:33:41,141 [method_c] INFO:   canonical inference: 5800 / 17783 images
+2026-05-07 05:33:44,641 [method_c] INFO:   canonical inference: 6000 / 17783 images
+2026-05-07 05:33:48,194 [method_c] INFO:   canonical inference: 6200 / 17783 images
+2026-05-07 05:33:51,734 [method_c] INFO:   canonical inference: 6400 / 17783 images
+2026-05-07 05:33:55,351 [method_c] INFO:   canonical inference: 6600 / 17783 images
+2026-05-07 05:33:58,970 [method_c] INFO:   canonical inference: 6800 / 17783 images
+2026-05-07 05:34:02,548 [method_c] INFO:   canonical inference: 7000 / 17783 images
+2026-05-07 05:34:06,130 [method_c] INFO:   canonical inference: 7200 / 17783 images
+2026-05-07 05:34:09,626 [method_c] INFO:   canonical inference: 7400 / 17783 images
+2026-05-07 05:34:13,233 [method_c] INFO:   canonical inference: 7600 / 17783 images
+2026-05-07 05:34:17,066 [method_c] INFO:   canonical inference: 7800 / 17783 images
+2026-05-07 05:34:20,661 [method_c] INFO:   canonical inference: 8000 / 17783 images
+2026-05-07 05:34:24,288 [method_c] INFO:   canonical inference: 8200 / 17783 images
+2026-05-07 05:34:27,859 [method_c] INFO:   canonical inference: 8400 / 17783 images
+2026-05-07 05:34:31,489 [method_c] INFO:   canonical inference: 8600 / 17783 images
+2026-05-07 05:34:35,031 [method_c] INFO:   canonical inference: 8800 / 17783 images
+2026-05-07 05:34:38,617 [method_c] INFO:   canonical inference: 9000 / 17783 images
+2026-05-07 05:34:42,131 [method_c] INFO:   canonical inference: 9200 / 17783 images
+2026-05-07 05:34:45,647 [method_c] INFO:   canonical inference: 9400 / 17783 images
+2026-05-07 05:34:49,215 [method_c] INFO:   canonical inference: 9600 / 17783 images
+2026-05-07 05:34:52,799 [method_c] INFO:   canonical inference: 9800 / 17783 images
+2026-05-07 05:34:56,367 [method_c] INFO:   canonical inference: 10000 / 17783 images
+2026-05-07 05:35:00,038 [method_c] INFO:   canonical inference: 10200 / 17783 images
+2026-05-07 05:35:03,621 [method_c] INFO:   canonical inference: 10400 / 17783 images
+2026-05-07 05:35:07,252 [method_c] INFO:   canonical inference: 10600 / 17783 images
+2026-05-07 05:35:10,894 [method_c] INFO:   canonical inference: 10800 / 17783 images
+2026-05-07 05:35:14,454 [method_c] INFO:   canonical inference: 11000 / 17783 images
+2026-05-07 05:35:18,106 [method_c] INFO:   canonical inference: 11200 / 17783 images
+2026-05-07 05:35:21,996 [method_c] INFO:   canonical inference: 11400 / 17783 images
+2026-05-07 05:35:25,625 [method_c] INFO:   canonical inference: 11600 / 17783 images
+2026-05-07 05:35:29,287 [method_c] INFO:   canonical inference: 11800 / 17783 images
+2026-05-07 05:35:32,884 [method_c] INFO:   canonical inference: 12000 / 17783 images
+2026-05-07 05:35:36,534 [method_c] INFO:   canonical inference: 12200 / 17783 images
+2026-05-07 05:35:40,155 [method_c] INFO:   canonical inference: 12400 / 17783 images
+2026-05-07 05:35:44,075 [method_c] INFO:   canonical inference: 12600 / 17783 images
+2026-05-07 05:35:47,689 [method_c] INFO:   canonical inference: 12800 / 17783 images
+2026-05-07 05:35:51,361 [method_c] INFO:   canonical inference: 13000 / 17783 images
+2026-05-07 05:35:55,004 [method_c] INFO:   canonical inference: 13200 / 17783 images
+2026-05-07 05:35:58,835 [method_c] INFO:   canonical inference: 13400 / 17783 images
+2026-05-07 05:36:02,442 [method_c] INFO:   canonical inference: 13600 / 17783 images
+2026-05-07 05:36:06,031 [method_c] INFO:   canonical inference: 13800 / 17783 images
+2026-05-07 05:36:09,655 [method_c] INFO:   canonical inference: 14000 / 17783 images
+2026-05-07 05:36:13,230 [method_c] INFO:   canonical inference: 14200 / 17783 images
+2026-05-07 05:36:16,856 [method_c] INFO:   canonical inference: 14400 / 17783 images
+2026-05-07 05:36:20,453 [method_c] INFO:   canonical inference: 14600 / 17783 images
+2026-05-07 05:36:24,334 [method_c] INFO:   canonical inference: 14800 / 17783 images
+2026-05-07 05:36:28,011 [method_c] INFO:   canonical inference: 15000 / 17783 images
+2026-05-07 05:36:31,565 [method_c] INFO:   canonical inference: 15200 / 17783 images
+2026-05-07 05:36:35,234 [method_c] INFO:   canonical inference: 15400 / 17783 images
+2026-05-07 05:36:38,884 [method_c] INFO:   canonical inference: 15600 / 17783 images
+2026-05-07 05:36:42,557 [method_c] INFO:   canonical inference: 15800 / 17783 images
+2026-05-07 05:36:46,258 [method_c] INFO:   canonical inference: 16000 / 17783 images
+2026-05-07 05:36:49,887 [method_c] INFO:   canonical inference: 16200 / 17783 images
+2026-05-07 05:36:53,568 [method_c] INFO:   canonical inference: 16400 / 17783 images
+2026-05-07 05:36:57,214 [method_c] INFO:   canonical inference: 16600 / 17783 images
+2026-05-07 05:37:00,886 [method_c] INFO:   canonical inference: 16800 / 17783 images
+2026-05-07 05:37:04,558 [method_c] INFO:   canonical inference: 17000 / 17783 images
+2026-05-07 05:37:08,285 [method_c] INFO:   canonical inference: 17200 / 17783 images
+2026-05-07 05:37:11,893 [method_c] INFO:   canonical inference: 17400 / 17783 images
+2026-05-07 05:37:15,618 [method_c] INFO:   canonical inference: 17600 / 17783 images
+2026-05-07 05:37:19,193 [method_c] INFO:   canonical inference: 17783 / 17783 images
+2026-05-07 05:37:19,250 [method_c] INFO:   C_t: 113684 candidates across 17783 images
+2026-05-07 05:37:21,483 [method_c] INFO: Step 2: C_prev (round 0): 113684 candidates across 17783 images
+2026-05-07 05:37:21,483 [method_c] INFO: Step 3: Hungarian matching...
+2026-05-07 05:38:53,132 [method_c] INFO:   matched: 110260, ambiguous: 3411, unmatched_current: 13
+2026-05-07 05:38:53,132 [method_c] INFO: Step 4: Jitter inference (τ_pre=0.30)...
+2026-05-07 05:38:53,872 [method_c] INFO:   jitter: 110260 qualifying boxes across 17285 images
+2026-05-07 05:40:30,838 [method_c] INFO:   jitter progress: 500 / 17285 images
+2026-05-07 05:42:08,577 [method_c] INFO:   jitter progress: 1000 / 17285 images
+2026-05-07 05:43:46,471 [method_c] INFO:   jitter progress: 1500 / 17285 images
+2026-05-07 05:45:24,850 [method_c] INFO:   jitter progress: 2000 / 17285 images
+2026-05-07 05:47:02,706 [method_c] INFO:   jitter progress: 2500 / 17285 images
+2026-05-07 05:48:40,266 [method_c] INFO:   jitter progress: 3000 / 17285 images
+2026-05-07 05:50:18,796 [method_c] INFO:   jitter progress: 3500 / 17285 images
+2026-05-07 05:51:56,721 [method_c] INFO:   jitter progress: 4000 / 17285 images
+2026-05-07 05:53:35,287 [method_c] INFO:   jitter progress: 4500 / 17285 images
+2026-05-07 05:55:13,950 [method_c] INFO:   jitter progress: 5000 / 17285 images
+2026-05-07 05:56:52,783 [method_c] INFO:   jitter progress: 5500 / 17285 images
+2026-05-07 05:58:30,905 [method_c] INFO:   jitter progress: 6000 / 17285 images
+2026-05-07 06:00:09,117 [method_c] INFO:   jitter progress: 6500 / 17285 images
+2026-05-07 06:01:47,607 [method_c] INFO:   jitter progress: 7000 / 17285 images
+2026-05-07 06:03:25,628 [method_c] INFO:   jitter progress: 7500 / 17285 images
+2026-05-07 06:05:03,325 [method_c] INFO:   jitter progress: 8000 / 17285 images
+2026-05-07 06:06:41,009 [method_c] INFO:   jitter progress: 8500 / 17285 images
+2026-05-07 06:08:18,929 [method_c] INFO:   jitter progress: 9000 / 17285 images
+2026-05-07 06:09:57,109 [method_c] INFO:   jitter progress: 9500 / 17285 images
+2026-05-07 06:11:35,030 [method_c] INFO:   jitter progress: 10000 / 17285 images
+2026-05-07 06:13:13,000 [method_c] INFO:   jitter progress: 10500 / 17285 images
+2026-05-07 06:14:51,122 [method_c] INFO:   jitter progress: 11000 / 17285 images
+2026-05-07 06:16:28,947 [method_c] INFO:   jitter progress: 11500 / 17285 images
+2026-05-07 06:18:06,601 [method_c] INFO:   jitter progress: 12000 / 17285 images
+2026-05-07 06:19:44,472 [method_c] INFO:   jitter progress: 12500 / 17285 images
+2026-05-07 06:21:21,920 [method_c] INFO:   jitter progress: 13000 / 17285 images
+2026-05-07 06:22:59,451 [method_c] INFO:   jitter progress: 13500 / 17285 images
+2026-05-07 06:24:37,093 [method_c] INFO:   jitter progress: 14000 / 17285 images
+2026-05-07 06:26:14,951 [method_c] INFO:   jitter progress: 14500 / 17285 images
+2026-05-07 06:27:52,663 [method_c] INFO:   jitter progress: 15000 / 17285 images
+2026-05-07 06:29:30,639 [method_c] INFO:   jitter progress: 15500 / 17285 images
+2026-05-07 06:31:08,970 [method_c] INFO:   jitter progress: 16000 / 17285 images
+2026-05-07 06:32:46,717 [method_c] INFO:   jitter progress: 16500 / 17285 images
+2026-05-07 06:34:24,641 [method_c] INFO:   jitter progress: 17000 / 17285 images
+2026-05-07 06:35:20,503 [method_c] INFO:   jitter progress: 17285 / 17285 images
+2026-05-07 06:35:20,551 [method_c] INFO:   jitter IoUs computed for 74671 boxes
+2026-05-07 06:35:20,552 [method_c] INFO: Step 5: Stability scoring (α=0.33, β=0.33, γ=0.34)...
+2026-05-07 06:35:33,171 [method_c] INFO:   scored: 110260 boxes, mean S=0.870, median S=0.959
+2026-05-07 06:35:33,171 [method_c] INFO: Step 6: Admission (τ_stab=0.60, τ_conf=0.50)...
+2026-05-07 06:35:33,247 [method_c] INFO:   Round 1 PL stats: 29709 admitted / 113684 candidates (26.1%)
+2026-05-07 06:35:33,247 [method_c] INFO:   Images with PLs: 13044
+2026-05-07 06:35:33,252 [method_c] INFO:     bicycle: 2059 (6.9%)
+2026-05-07 06:35:33,252 [method_c] INFO:     car: 15959 (53.7%)
+2026-05-07 06:35:33,252 [method_c] INFO:     motorcycle: 3917 (13.2%)
+2026-05-07 06:35:33,252 [method_c] INFO:     bus: 3045 (10.2%)
+2026-05-07 06:35:33,253 [method_c] INFO:     truck: 4729 (15.9%)
+2026-05-07 06:35:33,253 [method_c] INFO: Step 7: Writing to bank...
+2026-05-07 06:35:33,553 [method_c] INFO: Step 8: Stopping signals...
+2026-05-07 06:35:34,335 [method_c] INFO:   RawChurn=0.0293  StableYield=0.2613  ClassDrift=0.0000
+2026-05-07 06:35:34,335 [method_c] INFO:   consecutive_satisfied=0  stopped=False
+2026-05-07 06:35:39,175 [method_c] INFO: Step 11: Training round 1 (29709 PLs, warm-start)...
+2026-05-07 07:59:09,580 [method_c] INFO:   checkpoint: /home/ayoub/research/stability_autolabel/outputs/method_c/vehicles_fold0_10pct/training/round_0001/round_0001/train/weights/best.pt
+2026-05-07 07:59:09,581 [method_c] INFO: Evaluating round 1 checkpoint...
+2026-05-07 07:59:22,433 [method_c] INFO:   mAP50=0.4836  mAP50-95=0.3071
+2026-05-07 07:59:22,434 [method_c] INFO: Round 1 complete in 147.4 min
+2026-05-07 07:59:22,434 [method_c] INFO: ======================================================================
+2026-05-07 07:59:22,434 [method_c] INFO: ROUND 2 / 3
+2026-05-07 07:59:22,434 [method_c] INFO: ======================================================================
+2026-05-07 07:59:22,434 [method_c] INFO: Step 1: Canonical inference on 17783 unlabeled images...
+2026-05-07 07:59:26,388 [method_c] INFO:   canonical inference: 200 / 17783 images
+2026-05-07 07:59:30,089 [method_c] INFO:   canonical inference: 400 / 17783 images
+2026-05-07 07:59:33,596 [method_c] INFO:   canonical inference: 600 / 17783 images
+2026-05-07 07:59:37,204 [method_c] INFO:   canonical inference: 800 / 17783 images
+2026-05-07 07:59:40,759 [method_c] INFO:   canonical inference: 1000 / 17783 images
+2026-05-07 07:59:44,436 [method_c] INFO:   canonical inference: 1200 / 17783 images
+2026-05-07 07:59:48,060 [method_c] INFO:   canonical inference: 1400 / 17783 images
+2026-05-07 07:59:51,675 [method_c] INFO:   canonical inference: 1600 / 17783 images
+2026-05-07 07:59:55,668 [method_c] INFO:   canonical inference: 1800 / 17783 images
+2026-05-07 07:59:59,361 [method_c] INFO:   canonical inference: 2000 / 17783 images
+2026-05-07 08:00:02,994 [method_c] INFO:   canonical inference: 2200 / 17783 images
+2026-05-07 08:00:06,658 [method_c] INFO:   canonical inference: 2400 / 17783 images
+2026-05-07 08:00:10,274 [method_c] INFO:   canonical inference: 2600 / 17783 images
+2026-05-07 08:00:13,906 [method_c] INFO:   canonical inference: 2800 / 17783 images
+2026-05-07 08:00:17,491 [method_c] INFO:   canonical inference: 3000 / 17783 images
+2026-05-07 08:00:21,435 [method_c] INFO:   canonical inference: 3200 / 17783 images
+2026-05-07 08:00:24,997 [method_c] INFO:   canonical inference: 3400 / 17783 images
+2026-05-07 08:00:29,820 [method_c] INFO:   canonical inference: 3600 / 17783 images
+2026-05-07 08:00:33,546 [method_c] INFO:   canonical inference: 3800 / 17783 images
+2026-05-07 08:00:37,174 [method_c] INFO:   canonical inference: 4000 / 17783 images
+2026-05-07 08:00:40,668 [method_c] INFO:   canonical inference: 4200 / 17783 images
+2026-05-07 08:00:44,490 [method_c] INFO:   canonical inference: 4400 / 17783 images
+2026-05-07 08:00:48,015 [method_c] INFO:   canonical inference: 4600 / 17783 images
+2026-05-07 08:00:51,623 [method_c] INFO:   canonical inference: 4800 / 17783 images
+2026-05-07 08:00:55,177 [method_c] INFO:   canonical inference: 5000 / 17783 images
+2026-05-07 08:00:58,807 [method_c] INFO:   canonical inference: 5200 / 17783 images
+2026-05-07 08:01:02,423 [method_c] INFO:   canonical inference: 5400 / 17783 images
+2026-05-07 08:01:06,300 [method_c] INFO:   canonical inference: 5600 / 17783 images
+2026-05-07 08:01:09,921 [method_c] INFO:   canonical inference: 5800 / 17783 images
+2026-05-07 08:01:13,463 [method_c] INFO:   canonical inference: 6000 / 17783 images
+2026-05-07 08:01:16,989 [method_c] INFO:   canonical inference: 6200 / 17783 images
+2026-05-07 08:01:20,546 [method_c] INFO:   canonical inference: 6400 / 17783 images
+2026-05-07 08:01:24,036 [method_c] INFO:   canonical inference: 6600 / 17783 images
+2026-05-07 08:01:27,623 [method_c] INFO:   canonical inference: 6800 / 17783 images
+2026-05-07 08:01:31,136 [method_c] INFO:   canonical inference: 7000 / 17783 images
+2026-05-07 08:01:34,699 [method_c] INFO:   canonical inference: 7200 / 17783 images
+2026-05-07 08:01:38,178 [method_c] INFO:   canonical inference: 7400 / 17783 images
+2026-05-07 08:01:41,746 [method_c] INFO:   canonical inference: 7600 / 17783 images
+2026-05-07 08:01:45,294 [method_c] INFO:   canonical inference: 7800 / 17783 images
+2026-05-07 08:01:49,069 [method_c] INFO:   canonical inference: 8000 / 17783 images
+2026-05-07 08:01:52,873 [method_c] INFO:   canonical inference: 8200 / 17783 images
+2026-05-07 08:01:56,534 [method_c] INFO:   canonical inference: 8400 / 17783 images
+2026-05-07 08:02:00,242 [method_c] INFO:   canonical inference: 8600 / 17783 images
+2026-05-07 08:02:04,065 [method_c] INFO:   canonical inference: 8800 / 17783 images
+2026-05-07 08:02:07,725 [method_c] INFO:   canonical inference: 9000 / 17783 images
+2026-05-07 08:02:11,416 [method_c] INFO:   canonical inference: 9200 / 17783 images
+2026-05-07 08:02:14,981 [method_c] INFO:   canonical inference: 9400 / 17783 images
+2026-05-07 08:02:18,481 [method_c] INFO:   canonical inference: 9600 / 17783 images
+2026-05-07 08:02:21,977 [method_c] INFO:   canonical inference: 9800 / 17783 images
+2026-05-07 08:02:25,482 [method_c] INFO:   canonical inference: 10000 / 17783 images
+2026-05-07 08:02:29,103 [method_c] INFO:   canonical inference: 10200 / 17783 images
+2026-05-07 08:02:32,592 [method_c] INFO:   canonical inference: 10400 / 17783 images
+2026-05-07 08:02:36,121 [method_c] INFO:   canonical inference: 10600 / 17783 images
+2026-05-07 08:02:39,693 [method_c] INFO:   canonical inference: 10800 / 17783 images
+2026-05-07 08:02:43,187 [method_c] INFO:   canonical inference: 11000 / 17783 images
+2026-05-07 08:02:46,718 [method_c] INFO:   canonical inference: 11200 / 17783 images
+2026-05-07 08:02:50,249 [method_c] INFO:   canonical inference: 11400 / 17783 images
+2026-05-07 08:02:53,734 [method_c] INFO:   canonical inference: 11600 / 17783 images
+2026-05-07 08:02:57,212 [method_c] INFO:   canonical inference: 11800 / 17783 images
+2026-05-07 08:03:00,670 [method_c] INFO:   canonical inference: 12000 / 17783 images
+2026-05-07 08:03:04,130 [method_c] INFO:   canonical inference: 12200 / 17783 images
+2026-05-07 08:03:07,671 [method_c] INFO:   canonical inference: 12400 / 17783 images
+2026-05-07 08:03:11,207 [method_c] INFO:   canonical inference: 12600 / 17783 images
+2026-05-07 08:03:14,731 [method_c] INFO:   canonical inference: 12800 / 17783 images
+2026-05-07 08:03:18,298 [method_c] INFO:   canonical inference: 13000 / 17783 images
+2026-05-07 08:03:21,818 [method_c] INFO:   canonical inference: 13200 / 17783 images
+2026-05-07 08:03:25,315 [method_c] INFO:   canonical inference: 13400 / 17783 images
+2026-05-07 08:03:28,804 [method_c] INFO:   canonical inference: 13600 / 17783 images
+2026-05-07 08:03:32,368 [method_c] INFO:   canonical inference: 13800 / 17783 images
+2026-05-07 08:03:35,985 [method_c] INFO:   canonical inference: 14000 / 17783 images
+2026-05-07 08:03:39,504 [method_c] INFO:   canonical inference: 14200 / 17783 images
+2026-05-07 08:03:43,054 [method_c] INFO:   canonical inference: 14400 / 17783 images
+2026-05-07 08:03:46,595 [method_c] INFO:   canonical inference: 14600 / 17783 images
+2026-05-07 08:03:50,113 [method_c] INFO:   canonical inference: 14800 / 17783 images
+2026-05-07 08:03:53,626 [method_c] INFO:   canonical inference: 15000 / 17783 images
+2026-05-07 08:03:57,165 [method_c] INFO:   canonical inference: 15200 / 17783 images
+2026-05-07 08:04:00,707 [method_c] INFO:   canonical inference: 15400 / 17783 images
+2026-05-07 08:04:04,247 [method_c] INFO:   canonical inference: 15600 / 17783 images
+2026-05-07 08:04:07,758 [method_c] INFO:   canonical inference: 15800 / 17783 images
+2026-05-07 08:04:11,304 [method_c] INFO:   canonical inference: 16000 / 17783 images
+2026-05-07 08:04:14,789 [method_c] INFO:   canonical inference: 16200 / 17783 images
+2026-05-07 08:04:18,568 [method_c] INFO:   canonical inference: 16400 / 17783 images
+2026-05-07 08:04:22,049 [method_c] INFO:   canonical inference: 16600 / 17783 images
+2026-05-07 08:04:25,597 [method_c] INFO:   canonical inference: 16800 / 17783 images
+2026-05-07 08:04:29,177 [method_c] INFO:   canonical inference: 17000 / 17783 images
+2026-05-07 08:04:32,703 [method_c] INFO:   canonical inference: 17200 / 17783 images
+2026-05-07 08:04:36,220 [method_c] INFO:   canonical inference: 17400 / 17783 images
+2026-05-07 08:04:39,737 [method_c] INFO:   canonical inference: 17600 / 17783 images
+2026-05-07 08:04:42,963 [method_c] INFO:   canonical inference: 17783 / 17783 images
+2026-05-07 08:04:43,118 [method_c] INFO:   C_t: 68967 candidates across 17783 images
+2026-05-07 08:04:46,131 [method_c] INFO: Step 2: C_prev (round 1): 113684 candidates across 17783 images
+2026-05-07 08:04:46,131 [method_c] INFO: Step 3: Hungarian matching...
+2026-05-07 08:05:36,445 [method_c] INFO:   matched: 51932, ambiguous: 6198, unmatched_current: 10837
+2026-05-07 08:05:36,445 [method_c] INFO: Step 4: Jitter inference (τ_pre=0.30)...
+2026-05-07 08:05:36,698 [method_c] INFO:   jitter: 51932 qualifying boxes across 16034 images
+2026-05-07 08:07:11,121 [method_c] INFO:   jitter progress: 500 / 16034 images
+2026-05-07 08:08:45,867 [method_c] INFO:   jitter progress: 1000 / 16034 images
+2026-05-07 08:10:19,360 [method_c] INFO:   jitter progress: 1500 / 16034 images
+2026-05-07 08:11:52,903 [method_c] INFO:   jitter progress: 2000 / 16034 images
+2026-05-07 08:13:26,943 [method_c] INFO:   jitter progress: 2500 / 16034 images
+2026-05-07 08:15:01,898 [method_c] INFO:   jitter progress: 3000 / 16034 images
+2026-05-07 08:16:35,973 [method_c] INFO:   jitter progress: 3500 / 16034 images
+2026-05-07 08:18:09,244 [method_c] INFO:   jitter progress: 4000 / 16034 images
+2026-05-07 08:19:42,324 [method_c] INFO:   jitter progress: 4500 / 16034 images
+2026-05-07 08:21:17,457 [method_c] INFO:   jitter progress: 5000 / 16034 images
+2026-05-07 08:22:51,604 [method_c] INFO:   jitter progress: 5500 / 16034 images
+2026-05-07 08:24:25,999 [method_c] INFO:   jitter progress: 6000 / 16034 images
+2026-05-07 08:26:00,137 [method_c] INFO:   jitter progress: 6500 / 16034 images
+2026-05-07 08:27:33,941 [method_c] INFO:   jitter progress: 7000 / 16034 images
+2026-05-07 08:29:08,646 [method_c] INFO:   jitter progress: 7500 / 16034 images
+2026-05-07 08:30:43,109 [method_c] INFO:   jitter progress: 8000 / 16034 images
+2026-05-07 08:32:16,760 [method_c] INFO:   jitter progress: 8500 / 16034 images
+2026-05-07 08:33:50,967 [method_c] INFO:   jitter progress: 9000 / 16034 images
+2026-05-07 08:35:24,728 [method_c] INFO:   jitter progress: 9500 / 16034 images
+2026-05-07 08:36:58,772 [method_c] INFO:   jitter progress: 10000 / 16034 images
+2026-05-07 08:38:32,663 [method_c] INFO:   jitter progress: 10500 / 16034 images
+2026-05-07 08:40:06,070 [method_c] INFO:   jitter progress: 11000 / 16034 images
+2026-05-07 08:41:40,241 [method_c] INFO:   jitter progress: 11500 / 16034 images
+2026-05-07 08:43:13,593 [method_c] INFO:   jitter progress: 12000 / 16034 images
+2026-05-07 08:44:47,586 [method_c] INFO:   jitter progress: 12500 / 16034 images
+2026-05-07 08:46:21,978 [method_c] INFO:   jitter progress: 13000 / 16034 images
+2026-05-07 08:47:56,116 [method_c] INFO:   jitter progress: 13500 / 16034 images
+2026-05-07 08:49:30,496 [method_c] INFO:   jitter progress: 14000 / 16034 images
+2026-05-07 08:51:04,563 [method_c] INFO:   jitter progress: 14500 / 16034 images
+2026-05-07 08:52:38,738 [method_c] INFO:   jitter progress: 15000 / 16034 images
+2026-05-07 08:54:13,060 [method_c] INFO:   jitter progress: 15500 / 16034 images
+2026-05-07 08:55:46,254 [method_c] INFO:   jitter progress: 16000 / 16034 images
+2026-05-07 08:55:52,616 [method_c] INFO:   jitter progress: 16034 / 16034 images
+2026-05-07 08:55:52,657 [method_c] INFO:   jitter IoUs computed for 43109 boxes
+2026-05-07 08:55:52,657 [method_c] INFO: Step 5: Stability scoring (α=0.33, β=0.33, γ=0.34)...
+2026-05-07 08:55:59,377 [method_c] INFO:   scored: 51932 boxes, mean S=0.876, median S=0.942
+2026-05-07 08:55:59,377 [method_c] INFO: Step 6: Admission (τ_stab=0.60, τ_conf=0.50)...
+2026-05-07 08:55:59,443 [method_c] INFO:   Round 2 PL stats: 25120 admitted / 68967 candidates (36.4%)
+2026-05-07 08:55:59,443 [method_c] INFO:   Images with PLs: 12548
+2026-05-07 08:55:59,447 [method_c] INFO:     bicycle: 1884 (7.5%)
+2026-05-07 08:55:59,447 [method_c] INFO:     car: 13502 (53.8%)
+2026-05-07 08:55:59,447 [method_c] INFO:     motorcycle: 3452 (13.7%)
+2026-05-07 08:55:59,447 [method_c] INFO:     bus: 2707 (10.8%)
+2026-05-07 08:55:59,447 [method_c] INFO:     truck: 3575 (14.2%)
+2026-05-07 08:55:59,447 [method_c] INFO: Step 7: Writing to bank...
+2026-05-07 08:55:59,657 [method_c] INFO: Step 8: Stopping signals...
+2026-05-07 08:56:00,179 [method_c] INFO:   RawChurn=0.5968  StableYield=0.3642  ClassDrift=0.0013
+2026-05-07 08:56:00,179 [method_c] INFO:   consecutive_satisfied=0  stopped=False
+2026-05-07 08:56:03,590 [method_c] INFO: Step 11: Training round 2 (25120 PLs, warm-start)...
+2026-05-07 09:41:58,232 [method_c] INFO:   checkpoint: /home/ayoub/research/stability_autolabel/outputs/method_c/vehicles_fold0_10pct/training/round_0002/round_0002/train/weights/best.pt
+2026-05-07 09:41:58,233 [method_c] INFO: Evaluating round 2 checkpoint...
+2026-05-07 09:42:14,249 [method_c] INFO:   mAP50=0.4619  mAP50-95=0.2902
+2026-05-07 09:42:14,249 [method_c] INFO: Round 2 complete in 102.9 min
+2026-05-07 09:42:14,249 [method_c] INFO: ======================================================================
+2026-05-07 09:42:14,249 [method_c] INFO: ROUND 3 / 3
+2026-05-07 09:42:14,249 [method_c] INFO: ======================================================================
+2026-05-07 09:42:14,249 [method_c] INFO: Step 1: Canonical inference on 17783 unlabeled images...
+2026-05-07 09:42:18,208 [method_c] INFO:   canonical inference: 200 / 17783 images
+2026-05-07 09:42:21,822 [method_c] INFO:   canonical inference: 400 / 17783 images
+2026-05-07 09:42:25,448 [method_c] INFO:   canonical inference: 600 / 17783 images
+2026-05-07 09:42:29,013 [method_c] INFO:   canonical inference: 800 / 17783 images
+2026-05-07 09:42:32,693 [method_c] INFO:   canonical inference: 1000 / 17783 images
+2026-05-07 09:42:36,283 [method_c] INFO:   canonical inference: 1200 / 17783 images
+2026-05-07 09:42:40,782 [method_c] INFO:   canonical inference: 1400 / 17783 images
+2026-05-07 09:42:45,130 [method_c] INFO:   canonical inference: 1600 / 17783 images
+2026-05-07 09:42:49,009 [method_c] INFO:   canonical inference: 1800 / 17783 images
+2026-05-07 09:42:52,497 [method_c] INFO:   canonical inference: 2000 / 17783 images
+2026-05-07 09:42:56,117 [method_c] INFO:   canonical inference: 2200 / 17783 images
+2026-05-07 09:42:59,650 [method_c] INFO:   canonical inference: 2400 / 17783 images
+2026-05-07 09:43:03,117 [method_c] INFO:   canonical inference: 2600 / 17783 images
+2026-05-07 09:43:06,657 [method_c] INFO:   canonical inference: 2800 / 17783 images
+2026-05-07 09:43:10,266 [method_c] INFO:   canonical inference: 3000 / 17783 images
+2026-05-07 09:43:13,823 [method_c] INFO:   canonical inference: 3200 / 17783 images
+2026-05-07 09:43:17,562 [method_c] INFO:   canonical inference: 3400 / 17783 images
+2026-05-07 09:43:21,946 [method_c] INFO:   canonical inference: 3600 / 17783 images
+2026-05-07 09:43:25,399 [method_c] INFO:   canonical inference: 3800 / 17783 images
+2026-05-07 09:43:29,279 [method_c] INFO:   canonical inference: 4000 / 17783 images
+2026-05-07 09:43:32,811 [method_c] INFO:   canonical inference: 4200 / 17783 images
+2026-05-07 09:43:36,282 [method_c] INFO:   canonical inference: 4400 / 17783 images
+2026-05-07 09:43:39,857 [method_c] INFO:   canonical inference: 4600 / 17783 images
+2026-05-07 09:43:43,338 [method_c] INFO:   canonical inference: 4800 / 17783 images
+2026-05-07 09:43:46,850 [method_c] INFO:   canonical inference: 5000 / 17783 images
+2026-05-07 09:43:50,436 [method_c] INFO:   canonical inference: 5200 / 17783 images
+2026-05-07 09:43:54,009 [method_c] INFO:   canonical inference: 5400 / 17783 images
+2026-05-07 09:43:57,618 [method_c] INFO:   canonical inference: 5600 / 17783 images
+2026-05-07 09:44:01,155 [method_c] INFO:   canonical inference: 5800 / 17783 images
+2026-05-07 09:44:04,959 [method_c] INFO:   canonical inference: 6000 / 17783 images
+2026-05-07 09:44:08,530 [method_c] INFO:   canonical inference: 6200 / 17783 images
+2026-05-07 09:44:12,006 [method_c] INFO:   canonical inference: 6400 / 17783 images
+2026-05-07 09:44:15,425 [method_c] INFO:   canonical inference: 6600 / 17783 images
+2026-05-07 09:44:18,942 [method_c] INFO:   canonical inference: 6800 / 17783 images
+2026-05-07 09:44:22,612 [method_c] INFO:   canonical inference: 7000 / 17783 images
+2026-05-07 09:44:26,117 [method_c] INFO:   canonical inference: 7200 / 17783 images
+2026-05-07 09:44:29,687 [method_c] INFO:   canonical inference: 7400 / 17783 images
+2026-05-07 09:44:33,278 [method_c] INFO:   canonical inference: 7600 / 17783 images
+2026-05-07 09:44:37,199 [method_c] INFO:   canonical inference: 7800 / 17783 images
+2026-05-07 09:44:40,755 [method_c] INFO:   canonical inference: 8000 / 17783 images
+2026-05-07 09:44:44,657 [method_c] INFO:   canonical inference: 8200 / 17783 images
+2026-05-07 09:44:48,251 [method_c] INFO:   canonical inference: 8400 / 17783 images
+2026-05-07 09:44:51,871 [method_c] INFO:   canonical inference: 8600 / 17783 images
+2026-05-07 09:44:55,424 [method_c] INFO:   canonical inference: 8800 / 17783 images
+2026-05-07 09:44:59,005 [method_c] INFO:   canonical inference: 9000 / 17783 images
+2026-05-07 09:45:02,602 [method_c] INFO:   canonical inference: 9200 / 17783 images
+2026-05-07 09:45:06,464 [method_c] INFO:   canonical inference: 9400 / 17783 images
+2026-05-07 09:45:10,117 [method_c] INFO:   canonical inference: 9600 / 17783 images
+2026-05-07 09:45:13,686 [method_c] INFO:   canonical inference: 9800 / 17783 images
+2026-05-07 09:45:17,207 [method_c] INFO:   canonical inference: 10000 / 17783 images
+2026-05-07 09:45:20,805 [method_c] INFO:   canonical inference: 10200 / 17783 images
+2026-05-07 09:45:24,424 [method_c] INFO:   canonical inference: 10400 / 17783 images
+2026-05-07 09:45:28,032 [method_c] INFO:   canonical inference: 10600 / 17783 images
+2026-05-07 09:45:31,818 [method_c] INFO:   canonical inference: 10800 / 17783 images
+2026-05-07 09:45:35,414 [method_c] INFO:   canonical inference: 11000 / 17783 images
+2026-05-07 09:45:39,307 [method_c] INFO:   canonical inference: 11200 / 17783 images
+2026-05-07 09:45:43,224 [method_c] INFO:   canonical inference: 11400 / 17783 images
+2026-05-07 09:45:47,105 [method_c] INFO:   canonical inference: 11600 / 17783 images
+2026-05-07 09:45:50,794 [method_c] INFO:   canonical inference: 11800 / 17783 images
+2026-05-07 09:45:54,353 [method_c] INFO:   canonical inference: 12000 / 17783 images
+2026-05-07 09:45:57,972 [method_c] INFO:   canonical inference: 12200 / 17783 images
+2026-05-07 09:46:01,870 [method_c] INFO:   canonical inference: 12400 / 17783 images
+2026-05-07 09:46:05,524 [method_c] INFO:   canonical inference: 12600 / 17783 images
+2026-05-07 09:46:09,109 [method_c] INFO:   canonical inference: 12800 / 17783 images
+2026-05-07 09:46:12,764 [method_c] INFO:   canonical inference: 13000 / 17783 images
+2026-05-07 09:46:16,711 [method_c] INFO:   canonical inference: 13200 / 17783 images
+2026-05-07 09:46:20,363 [method_c] INFO:   canonical inference: 13400 / 17783 images
+2026-05-07 09:46:23,921 [method_c] INFO:   canonical inference: 13600 / 17783 images
+2026-05-07 09:46:27,511 [method_c] INFO:   canonical inference: 13800 / 17783 images
+2026-05-07 09:46:31,045 [method_c] INFO:   canonical inference: 14000 / 17783 images
+2026-05-07 09:46:34,626 [method_c] INFO:   canonical inference: 14200 / 17783 images
+2026-05-07 09:46:38,149 [method_c] INFO:   canonical inference: 14400 / 17783 images
+2026-05-07 09:46:41,754 [method_c] INFO:   canonical inference: 14600 / 17783 images
+2026-05-07 09:46:45,321 [method_c] INFO:   canonical inference: 14800 / 17783 images
+2026-05-07 09:46:49,011 [method_c] INFO:   canonical inference: 15000 / 17783 images
+2026-05-07 09:46:52,565 [method_c] INFO:   canonical inference: 15200 / 17783 images
+2026-05-07 09:46:56,324 [method_c] INFO:   canonical inference: 15400 / 17783 images
+2026-05-07 09:46:59,961 [method_c] INFO:   canonical inference: 15600 / 17783 images
+2026-05-07 09:47:03,508 [method_c] INFO:   canonical inference: 15800 / 17783 images
+2026-05-07 09:47:07,411 [method_c] INFO:   canonical inference: 16000 / 17783 images
+2026-05-07 09:47:10,932 [method_c] INFO:   canonical inference: 16200 / 17783 images
+2026-05-07 09:47:14,597 [method_c] INFO:   canonical inference: 16400 / 17783 images
+2026-05-07 09:47:18,075 [method_c] INFO:   canonical inference: 16600 / 17783 images
+2026-05-07 09:47:21,746 [method_c] INFO:   canonical inference: 16800 / 17783 images
+2026-05-07 09:47:25,242 [method_c] INFO:   canonical inference: 17000 / 17783 images
+2026-05-07 09:47:28,798 [method_c] INFO:   canonical inference: 17200 / 17783 images
+2026-05-07 09:47:32,372 [method_c] INFO:   canonical inference: 17400 / 17783 images
+2026-05-07 09:47:35,920 [method_c] INFO:   canonical inference: 17600 / 17783 images
+2026-05-07 09:47:39,177 [method_c] INFO:   canonical inference: 17783 / 17783 images
+2026-05-07 09:47:39,286 [method_c] INFO:   C_t: 60902 candidates across 17783 images
+2026-05-07 09:47:41,884 [method_c] INFO: Step 2: C_prev (round 2): 68967 candidates across 17783 images
+2026-05-07 09:47:41,885 [method_c] INFO: Step 3: Hungarian matching...
+2026-05-07 09:48:09,078 [method_c] INFO:   matched: 48154, ambiguous: 3381, unmatched_current: 9367
+2026-05-07 09:48:09,079 [method_c] INFO: Step 4: Jitter inference (τ_pre=0.30)...
+2026-05-07 09:48:09,312 [method_c] INFO:   jitter: 48154 qualifying boxes across 16064 images
+2026-05-07 09:49:42,745 [method_c] INFO:   jitter progress: 500 / 16064 images
+2026-05-07 09:51:16,322 [method_c] INFO:   jitter progress: 1000 / 16064 images
+2026-05-07 09:52:50,169 [method_c] INFO:   jitter progress: 1500 / 16064 images
+2026-05-07 09:54:23,633 [method_c] INFO:   jitter progress: 2000 / 16064 images
+2026-05-07 09:55:57,535 [method_c] INFO:   jitter progress: 2500 / 16064 images
+2026-05-07 09:57:31,926 [method_c] INFO:   jitter progress: 3000 / 16064 images
+2026-05-07 09:59:06,471 [method_c] INFO:   jitter progress: 3500 / 16064 images
+2026-05-07 10:00:40,246 [method_c] INFO:   jitter progress: 4000 / 16064 images
+2026-05-07 10:02:13,500 [method_c] INFO:   jitter progress: 4500 / 16064 images
+2026-05-07 10:03:47,283 [method_c] INFO:   jitter progress: 5000 / 16064 images
+2026-05-07 10:05:22,193 [method_c] INFO:   jitter progress: 5500 / 16064 images
+2026-05-07 10:06:55,726 [method_c] INFO:   jitter progress: 6000 / 16064 images
+2026-05-07 10:08:29,868 [method_c] INFO:   jitter progress: 6500 / 16064 images
+2026-05-07 10:10:03,541 [method_c] INFO:   jitter progress: 7000 / 16064 images
+2026-05-07 10:11:37,881 [method_c] INFO:   jitter progress: 7500 / 16064 images
+2026-05-07 10:13:11,935 [method_c] INFO:   jitter progress: 8000 / 16064 images
+2026-05-07 10:14:47,150 [method_c] INFO:   jitter progress: 8500 / 16064 images
+2026-05-07 10:16:20,785 [method_c] INFO:   jitter progress: 9000 / 16064 images
+2026-05-07 10:17:54,413 [method_c] INFO:   jitter progress: 9500 / 16064 images
+2026-05-07 10:19:28,335 [method_c] INFO:   jitter progress: 10000 / 16064 images
+2026-05-07 10:21:02,445 [method_c] INFO:   jitter progress: 10500 / 16064 images
+2026-05-07 10:22:36,241 [method_c] INFO:   jitter progress: 11000 / 16064 images
+2026-05-07 10:24:10,334 [method_c] INFO:   jitter progress: 11500 / 16064 images
+2026-05-07 10:25:44,449 [method_c] INFO:   jitter progress: 12000 / 16064 images
+2026-05-07 10:27:18,893 [method_c] INFO:   jitter progress: 12500 / 16064 images
+2026-05-07 10:28:52,142 [method_c] INFO:   jitter progress: 13000 / 16064 images
+2026-05-07 10:30:26,776 [method_c] INFO:   jitter progress: 13500 / 16064 images
+2026-05-07 10:31:59,382 [method_c] INFO:   jitter progress: 14000 / 16064 images
+2026-05-07 10:33:33,072 [method_c] INFO:   jitter progress: 14500 / 16064 images
+2026-05-07 10:35:06,664 [method_c] INFO:   jitter progress: 15000 / 16064 images
+2026-05-07 10:36:40,444 [method_c] INFO:   jitter progress: 15500 / 16064 images
+2026-05-07 10:38:14,418 [method_c] INFO:   jitter progress: 16000 / 16064 images
+2026-05-07 10:38:26,325 [method_c] INFO:   jitter progress: 16064 / 16064 images
+2026-05-07 10:38:26,353 [method_c] INFO:   jitter IoUs computed for 39877 boxes
+2026-05-07 10:38:26,353 [method_c] INFO: Step 5: Stability scoring (α=0.33, β=0.33, γ=0.34)...
+2026-05-07 10:38:32,483 [method_c] INFO:   scored: 48154 boxes, mean S=0.895, median S=0.960
+2026-05-07 10:38:32,483 [method_c] INFO: Step 6: Admission (τ_stab=0.60, τ_conf=0.50)...
+2026-05-07 10:38:32,546 [method_c] INFO:   Round 3 PL stats: 24935 admitted / 60902 candidates (40.9%)
+2026-05-07 10:38:32,546 [method_c] INFO:   Images with PLs: 12651
+2026-05-07 10:38:32,551 [method_c] INFO:     bicycle: 1998 (8.0%)
+2026-05-07 10:38:32,551 [method_c] INFO:     car: 13488 (54.1%)
+2026-05-07 10:38:32,551 [method_c] INFO:     motorcycle: 3200 (12.8%)
+2026-05-07 10:38:32,551 [method_c] INFO:     bus: 2631 (10.6%)
+2026-05-07 10:38:32,551 [method_c] INFO:     truck: 3618 (14.5%)
+2026-05-07 10:38:32,551 [method_c] INFO: Step 7: Writing to bank...
+2026-05-07 10:38:32,754 [method_c] INFO: Step 8: Stopping signals...
+2026-05-07 10:38:33,205 [method_c] INFO:   RawChurn=0.3972  StableYield=0.4094  ClassDrift=0.0013
+2026-05-07 10:38:33,205 [method_c] INFO:   consecutive_satisfied=0  stopped=False
+2026-05-07 10:38:36,359 [method_c] INFO: Step 11: Training round 3 (24935 PLs, warm-start)...
+2026-05-07 11:34:26,170 [method_c] INFO:   checkpoint: /home/ayoub/research/stability_autolabel/outputs/method_c/vehicles_fold0_10pct/training/round_0003/round_0003/train/weights/best.pt
+2026-05-07 11:34:26,171 [method_c] INFO: Evaluating round 3 checkpoint...
+2026-05-07 11:34:40,823 [method_c] INFO:   mAP50=0.4603  mAP50-95=0.2898
+2026-05-07 11:34:40,823 [method_c] INFO: Round 3 complete in 112.4 min
+2026-05-07 11:34:40,823 [method_c] INFO: ======================================================================
+2026-05-07 11:34:40,823 [method_c] INFO: FINAL EVALUATION
+2026-05-07 11:34:40,823 [method_c] INFO: ======================================================================
+2026-05-07 11:34:40,824 [method_c] INFO: Final checkpoint: /home/ayoub/research/stability_autolabel/outputs/method_c/vehicles_fold0_10pct/training/round_0003/round_0003/train/weights/best.pt
+2026-05-07 11:34:40,824 [method_c] INFO: Stop reason: max_rounds
+2026-05-07 11:34:50,904 [method_c] INFO: Final mAP50=0.4603  mAP50-95=0.2898
+2026-05-07 11:34:50,905 [method_c] INFO: ======================================================================
+2026-05-07 11:34:50,905 [method_c] INFO: SIGNAL HISTORY
+2026-05-07 11:34:50,905 [method_c] INFO: Round   RawChurn    StableYield   ClassDrift
+2026-05-07 11:34:50,905 [method_c] INFO: 1       0.0293      0.2613        0.0000    
+2026-05-07 11:34:50,905 [method_c] INFO: 2       0.5968      0.3642        0.0013    
+2026-05-07 11:34:50,905 [method_c] INFO: 3       0.3972      0.4094        0.0013    
+2026-05-07 11:34:50,905 [method_c] INFO: ======================================================================
+2026-05-07 11:34:50,905 [method_c] INFO: Done.
