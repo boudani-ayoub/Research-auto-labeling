@@ -451,6 +451,11 @@ def main():
                         help="Disable stopping for first N rounds")
     parser.add_argument("--K_consecutive", type=int, default=2,
                         help="Consecutive rounds to trigger stop")
+    parser.add_argument("--enable_risk_stop", action="store_true",
+                        help="Enable risk-stop: halt before training if "
+                             "high churn + rising StableYield (self-confirmation risk)")
+    parser.add_argument("--tau_risk_churn", type=float, default=0.45,
+                        help="RawChurn threshold for risk-stop (default: 0.45)")
     parser.add_argument("--overwrite", action="store_true",
                         help="Delete output_dir before starting (prevents "
                              "stale bank corruption on rerun)")
@@ -481,6 +486,8 @@ def main():
     )
     logger.info("Method C — Stability-gated iterative auto-labeling")
     logger.info("Args: %s", vars(args))
+    if args.enable_risk_stop:
+        logger.info("Risk-stop ENABLED: τ_risk_churn=%.2f", args.tau_risk_churn)
 
     # ── Load split ───────────────────────────────────────────────────────────
     split = load_split(args.split_json)
@@ -739,6 +746,34 @@ def main():
             stop_condition_met=stop_state.consecutive_satisfied > 0,
             model_checkpoint=checkpoint_t,
         ))
+
+        # ── STEP 9b: Risk-stop check ────────────────────────────────────────
+        # Detects self-confirmation risk: high churn (model changed a lot)
+        # combined with rising StableYield (more boxes passing stability gate
+        # despite the instability). This pattern precedes degradation.
+        # Unlike convergence-stop, risk-stop does NOT train — it keeps the
+        # previous round's checkpoint as final output.
+        if args.enable_risk_stop and len(stop_state.signal_history) >= 2:
+            prev_snap = stop_state.signal_history[-2]
+            curr_snap = stop_state.signal_history[-1]
+            high_churn = curr_snap.raw_churn > args.tau_risk_churn
+            yield_increased = curr_snap.stable_yield > prev_snap.stable_yield
+
+            if high_churn and yield_increased:
+                stop_state.stopped = True
+                stop_state.stop_reason = (
+                    f"risk_stop: RawChurn={curr_snap.raw_churn:.4f} > "
+                    f"{args.tau_risk_churn}, StableYield increased "
+                    f"{prev_snap.stable_yield:.4f} -> "
+                    f"{curr_snap.stable_yield:.4f}"
+                )
+                logger.info("RISK STOP at round %d: %s",
+                            round_t, stop_state.stop_reason)
+                logger.info("  Keeping previous checkpoint (no training): %s",
+                            checkpoint_t)
+                del model_t
+                torch.cuda.empty_cache()
+                break
 
         # ── STEP 10: Check convergence stop ──────────────────────────────────
         # NOTE: do NOT break here for max_rounds — always train first (Fix 2)
